@@ -272,7 +272,7 @@ extract bzip2  "${win32}"                 "${cache}/${gtkspell}.tar.bz2"
 extract zip    "${win32}"                 "${cache}/meanwhile-1.0.2_daa3-win32.zip"
 extract zip    "${win32}"                 "${cache}/enchant_1.6.0_win32.zip"
 extract zip    "${win32}"                 "${cache}/${nsis}.zip"
-extract zip    "${win32}/${nsis}/Plugins/x86-unicode/" "${cache}/Nsisunzu.zip" "NSISunzU/Plugin unicode/nsisunz.dll"
+extract zip    "${win32}/${nsis}/Plugins/x86-unicode/" "${cache}/NSISunzU.zip" "NSISunzU/Plugin unicode/nsisunz.dll"
 extract zip    "${win32}/${nsis}/Plugins/x86-unicode/" "${cache}/Inetc.zip" Plugins/x86-unicode/INetC.dll
 extract zip    "${win32}/${nsis}/Plugins/x86-unicode/" "${cache}/Crypto.zip" Plugins/x86-unicode/Crypto.dll
 extract zip    "${win32}/${perl_dir}"     "${cache}/${perl}.zip"
