@@ -5,6 +5,9 @@ pidgin_version="2.14.13"
 devroot="$1"
 path="$2"
 
+SCRIPT_RELATIVE_PATH=$(dirname "${0}")
+SCRIPT_ABSOLUTE_PATH=$(realpath "${SCRIPT_RELATIVE_PATH}")
+
 if [[ "$1" = -* || -z "$devroot" || ( -n "$path" && "$path" != --path ) ]]; then echo "
     Pidgin Windows Development Setup ${version}
     Target Pidgin version ${pidgin_version}
@@ -135,6 +138,9 @@ install() {
 
 # Path configuration
 if [[ -n "$path" ]]; then
+    echo "--path is deprecated. Source the 'activate' script that is in the win32-dev"
+    echo "directory instead"
+
     printf "%s" "export PATH='"
     printf "%s" "${win32}/${mingw}/bin:"
     printf "%s" "${win32}/${perl_dir}/perl/bin:"
@@ -282,6 +288,9 @@ extract zip    "${win32}/gtk_2_0-2.14"    "${cache}/gtk+-bundle_2.14.7-20090119_
 extract zip    "${win32}/${intltool}"     "${cache}/${intltool}.zip"
 extract gzip   "${win32}/${gcc_core44}"   "${cache}/${gcc_core44}.tar.gz"
 info "Installing" "SHA1 plugin for NSIS"; cp "${win32}/${pidgin_inst_deps}/SHA1Plugin.dll" "${win32}/${nsis}/Plugins"
+info "Installing" "activation script"
+# shellcheck disable=SC2016
+MINGW=${mingw} NSIS=${nsis} PERL=${perl} envsubst '$MINGW $NSIS $PERL' < "${SCRIPT_ABSOLUTE_PATH}/templates/activate.in" > "${win32}/activate"
 echo
 
 # Finishing
