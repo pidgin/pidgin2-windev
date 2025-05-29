@@ -82,8 +82,8 @@ perl_version="5.20.1.1"
 perl="strawberry-perl-$perl_version-32bit"
 perl_dir="strawberry-perl-${perl_version%.*}"
 pidgin_base_url="https://developer.pidgin.im/static/win32"
-gnome_base_url="http://ftp.gnome.org/pub/gnome/binaries"
-mingw_base_url="http://sourceforge.net/projects/mingw/files/MinGW/Base"
+gnome_base_url="https://ftp.gnome.org/pub/gnome/binaries"
+mingw_base_url="https://sourceforge.net/projects/mingw/files/MinGW/Base"
 mingw_gcc44_url="$mingw_base_url/gcc/Version4/Previous%20Release%20gcc-4.4.0"
 mingw_pthreads_url="$mingw_base_url/pthreads-w32/pthreads-w32-2.9.0-pre-20110507-2"
 
@@ -101,7 +101,7 @@ download() {
     file="$1/$filename"
     mkdir -p "$1"
     [[ -f "$file" && ! -s "$file" ]] && rm "$file"
-    [[ ! -e "$file" ]] && { wget --no-check-certificate --quiet --output-document "$file" "$2" || oops "failed downloading from ${2}"; }
+    [[ ! -e "$file" ]] && { wget --quiet --output-document "$file" "$2" || oops "failed downloading from ${2}"; }
 }
 
 extract() {
@@ -205,7 +205,7 @@ echo
 
 # Download Pidgin
 step "Downloading Pidgin source code"
-download "$cache" "http://prdownloads.sourceforge.net/pidgin/pidgin-${pidgin_version}.tar.bz2"
+download "$cache" "https://prdownloads.sourceforge.net/pidgin/pidgin-${pidgin_version}.tar.bz2"
 source_directory="${devroot}/pidgin-${pidgin_version}"
 echo
 
@@ -225,11 +225,11 @@ download "${cache}" "${pidgin_base_url}/nss-3.24-nspr-4.12.tar.gz"
 download "${cache}" "${pidgin_base_url}/perl-${perl_version}.tar.gz"
 download "${cache}" "${pidgin_base_url}/silc-toolkit-1.1.12.tar.gz"
 download "${cache}" "${pidgin_base_url}/${pidgin_inst_deps}.tar.gz"
-download "${cache}" "http://strawberryperl.com/download/${perl_version}/${perl}.zip"
+download "${cache}" "https://strawberryperl.com/download/${perl_version}/${perl}.zip"
 download "${cache}" "https://nsis.sourceforge.io/mediawiki/images/5/5a/NSISunzU.zip"
 download "${cache}" "https://nsis.sourceforge.io/mediawiki/images/c/c9/Inetc.zip"
 download "${cache}" "https://nsis.sourceforge.io/mediawiki/images/c/cd/Crypto.zip"
-download "${cache}" "http://sourceforge.net/projects/nsis/files/NSIS%203/3.09/${nsis}.zip/download"
+download "${cache}" "https://sourceforge.net/projects/nsis/files/NSIS%203/3.09/${nsis}.zip/download"
 echo
 
 # Extract GCC
