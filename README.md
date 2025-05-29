@@ -31,7 +31,18 @@ This will download the sources of everything into
 `<directory name>/win32-dev` and extract the current Pidgin release into
 `<directory name>/pidgin-<version>`.
 
-When it has completed you can then "activate" the build directory by running
+When it has completed you can then "activate" the dev environment by sourcing
+the activation script in the win32-dev directory.
+
+```sh
+source <directory name>/win32-dev/activate
+```
+
+You can also deactivate it by typing `deactivate`.
+
+Previously, activation was done by running the following command. This still
+works, but has been deprecated in favor of the `activate` script and will be
+removed in a future version.
 
 ```sh
 eval $(./pidgin-windev.sh <directory name> --path)

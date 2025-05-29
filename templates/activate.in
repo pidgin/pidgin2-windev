@@ -1,0 +1,57 @@
+# shellcheck shell=bash
+# This script is heavily based off of `bin/activate` from python virtualenv.
+# It must be sourced by bash with `source <devenv>/activate`
+
+if [ "${BASH_SOURCE-}" = "$0" ]; then
+    echo "You must source this script: \$ source $0" >&2
+    exit 1
+fi
+
+RELATIVE_WINDEV=$(dirname "${BASH_SOURCE-}")
+WINDEV=$(realpath "${RELATIVE_WINDEV}")
+
+deactivate() {
+    if [ -n "${_OLD_PIDGIN_WINDEV_PATH:+_}" ] ; then
+        PATH="${_OLD_PIDGIN_WINDEV_PATH}"
+        export PATH
+        unset _OLD_PIDGIN_WINDEV_PATH
+    fi
+
+    # This should detect bash and zsh, which have a hash command that must
+    # be called to get it to forget past commands.  Without forgetting
+    # past commands the $PATH changes we made may not be respected
+    if [ -n "${BASH-}" ] || [ -n "${ZSH_VERSION-}" ] ; then
+        hash -r 2>/dev/null
+    fi
+
+    unset WIN32_DEV_TOP
+    unset PIDGIN_WINDEV
+    if [ ! "${1-}" = "nondestructive" ] ; then
+    # Self destruct!
+        unset -f deactivate
+    fi
+}
+
+deactivate nondestructive
+
+printf "activating pidgin windev '%s'\n" "${WINDEV}"
+
+# Save the path for the virtual environment
+PIDGIN_WINDEV="${WINDEV}"
+export PIDGIN_WINDEV
+
+# Store the old path so it can be restored on deactivation
+_OLD_PIDGIN_WINDEV_PATH="${PATH}"
+PATH="${PIDGIN_WINDEV}/${MINGW}/bin:${PIDGIN_WINDEV}/${PERL}/perl/bin:${PIDGIN_WINDEV}/${NSIS}/:${PATH}"
+export PATH
+
+# Update WIN32_DEV_TOP so that the Pidgin build with automatically find this
+WIN32_DEV_TOP="${WINDEV}"
+export WIN32_DEV_TOP
+
+# This should detect bash and zsh, which have a hash command that must
+# be called to get it to forget past commands.  Without forgetting
+# past commands the $PATH changes we made may not be respected
+if [ -n "${BASH-}" ] || [ -n "${ZSH_VERSION-}" ] ; then
+    hash -r 2>/dev/null
+fi
